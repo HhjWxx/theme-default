@@ -75,6 +75,7 @@
         <!-- -pagination  -->
       </div>
     </div>
+    <el-backtop :bottom="70"> <div class="up" ref="up">UP</div></el-backtop>
   </div>
 </template>
 
@@ -126,6 +127,18 @@ export default {
     handleCurrentChange(val) {
       this.listQuery["page"] = val;
       this.getList();
+      this.toTop();
+    },
+    toTop(){
+      let distance = document.documentElement.scrollTop || document.body.scrollTop; //获得当前高度
+      let step = distance/50; //每步的距离
+      (function jump(){
+        if(distance > 0){
+          distance-=step;
+          window.scrollTo(0,distance);
+          setTimeout(jump,10)
+        }
+      })();
     }
   }
 };
